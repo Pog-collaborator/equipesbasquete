@@ -40,15 +40,6 @@ const id = request.params.id;
 
 const equipe = request.body;
 
-// for(let i =0; i <equipesbasquete.length; i++){
-//     if(equipesbasquete[i].id == id){
-//         equipesbasquete[i].id = equipe.id;
-//         equipesbasquete[i].nome = equipe.nome;
-//         equipesbasquete[i].valormercado = equipe.valormercado;
-//         equipesbasquete[i].arena = equipe.arena;
-//         break;
-//     }
-// }
 
 
 equipesbasquete.forEach(e => {
@@ -67,13 +58,7 @@ server.delete('/equipesbasquete/:id', function(request, response){
 
     const id = request.params.id;
 
-    // for(let i =0; i <=equipesbasquete.length; i++){
-    //     if(equipesbasquete[i].id == id){
-    //         equipesbasquete.splice(i,1);
-    //         break;
-            
-    //     }
-    // }
+
     equipesbasquete = equipesbasquete.filter(e => e.id != id);
     return response.status(204).send();
 

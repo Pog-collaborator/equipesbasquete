@@ -5,10 +5,13 @@ const server = express();
 server.use(express.json());
 
 
-const equipesbasquete = [
+var equipesbasquete = [
 
     {
-        nome:'Chicago Bulls', arena:'Oracle Center'
+        id: 1,
+        nome:'Chicago Bulls', 
+        valormercado: '20000000',
+         arena:'Oracle Center'
     }
 ]
 
@@ -23,9 +26,9 @@ server.get('/equipesbasquete', function(request, response) {
 server.post('/equipesbasquete', function(request, response)
 {
 
-    const {nome, arena} = request.body;
+    const {id, nome, valormercado, arena} = request.body;
 
-    equipesbasquete.push({nome, arena});
+    equipesbasquete.push({id, nome, valormercado, arena});
     response.status(204).send();
 })
 
@@ -33,32 +36,46 @@ server.post('/equipesbasquete', function(request, response)
 server.put('/equipesbasquete/:id', function(request, response)
 {
     
-const {id} = request.params;
+const id = request.params.id;
+
+const equipe = request.body;
+
+// for(let i =0; i <equipesbasquete.length; i++){
+//     if(equipesbasquete[i].id == id){
+//         equipesbasquete[i].id = equipe.id;
+//         equipesbasquete[i].nome = equipe.nome;
+//         equipesbasquete[i].valormercado = equipe.valormercado;
+//         equipesbasquete[i].arena = equipe.arena;
+//         break;
+//     }
+// }
 
 
-const {nome, arena} = request.body;
-
-for(let i =0; i <equipesbasquete.length; i++){
-    if(equipesbasquete[i].nome ==id){
-        equipesbasquete[i].nome = nome;
-        equipesbasquete[i].arena = arena;
-        break;
+equipesbasquete.forEach(e => {
+    if(e.id == id){
+        e.nome = equipe.nome;
+        e.valormercado = equipe.valormercado;
+        e.arena = equipe.arena;
+        return
     }
-}
+})
+
 return response.status(204).send();
 })
 
 server.delete('/equipesbasquete/:id', function(request, response){
 
-const {id} = request.params;
+    const id = request.params.id;
 
-for(let i =0; i <equipesbasquete.length; i++){
-    if(equipesbasquete[i].nome ==id){
-        equipesbasquete.splice(i,1);
-        break;
-    }
-}
-return response.status(204).send();
+    // for(let i =0; i <=equipesbasquete.length; i++){
+    //     if(equipesbasquete[i].id == id){
+    //         equipesbasquete.splice(i,1);
+    //         break;
+            
+    //     }
+    // }
+    equipesbasquete = equipesbasquete.filter(e => e.id != id);
+    return response.status(204).send();
 
 })
 
